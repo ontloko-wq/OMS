@@ -1,0 +1,156 @@
+
+"use client";
+
+import { useState } from "react";
+
+const sections = [
+  "Dashboard",
+  "Patient Registration",
+  "Appointments",
+  "Billing & Payments",
+  "Patient Records",
+  "Reports",
+];
+
+export default function Home() {
+  const [activeSection, setActiveSection] = useState("Dashboard");
+
+  return (
+    <main className="app-shell">
+      <aside className="sidebar">
+        <div className="brand">
+          <h1>OMS</h1>
+          <p>Onguhlanga Medical Solutions</p>
+        </div>
+
+        <p className="nav-label">Practice</p>
+        <nav className="nav-list" aria-label="Main navigation">
+          {sections.map((section) => (
+            <button
+              key={section}
+              className={`nav-item ${
+                activeSection === section ? "active" : ""
+              }`}
+              onClick={() => setActiveSection(section)}
+              aria-current={activeSection === section ? "page" : undefined}
+            >
+              {section}
+            </button>
+          ))}
+        </nav>
+
+        <p className="sidebar-note">
+          Practice management
+          <br />
+          Butterworth, Eastern Cape
+        </p>
+      </aside>
+
+      <section className="main-area">
+        <header className="topbar">
+          <div>
+            <strong>OMS Practice Management</strong>
+            <p>Reception and practice overview</p>
+          </div>
+          <p>Setup preview</p>
+        </header>
+
+        <div className="page-content">
+          <div className="page-heading">
+            <div>
+              <h2>{activeSection}</h2>
+              <p>
+                {activeSection === "Dashboard"
+                  ? "Welcome to your practice workspace."
+                  : `The ${activeSection.toLowerCase()} workspace will be built next.`}
+              </p>
+            </div>
+          </div>
+
+          <div className="demo-notice">
+            <strong>DEMO MODE:</strong> This is an initial interface preview.
+            It does not save patient records or process payments. Do not enter
+            real patient information.
+          </div>
+
+          {activeSection === "Dashboard" ? (
+            <>
+              <div className="stats-grid">
+                <article className="stat-card">
+                  <p>Registered patients</p>
+                  <h3>—</h3>
+                  <small>Database not connected</small>
+                </article>
+
+                <article className="stat-card">
+                  <p>Today's appointments</p>
+                  <h3>—</h3>
+                  <small>Appointment module pending</small>
+                </article>
+
+                <article className="stat-card">
+                  <p>Payments recorded</p>
+                  <h3>—</h3>
+                  <small>Billing module pending</small>
+                </article>
+              </div>
+
+              <section className="panel">
+                <div className="panel-heading">
+                  <h3>Reception quick actions</h3>
+                  <span className="badge">Setup</span>
+                </div>
+
+                <div className="action-grid">
+                  <button
+                    className="action-button"
+                    onClick={() => setActiveSection("Patient Registration")}
+                  >
+                    + Register a patient
+                  </button>
+
+                  <button
+                    className="action-button"
+                    onClick={() => setActiveSection("Appointments")}
+                  >
+                    View appointments
+                  </button>
+
+                  <button
+                    className="action-button"
+                    onClick={() => setActiveSection("Billing & Payments")}
+                  >
+                    Record a payment
+                  </button>
+
+                  <button
+                    className="action-button"
+                    onClick={() => setActiveSection("Patient Records")}
+                  >
+                    Find patient records
+                  </button>
+                </div>
+              </section>
+            </>
+          ) : (
+            <section className="panel">
+              <div className="panel-heading">
+                <h3>{activeSection}</h3>
+              </div>
+              <p>
+                This section is a placeholder while we build the application.
+                Its data and permissions have not been configured yet.
+              </p>
+              <button
+                className="secondary-button"
+                onClick={() => setActiveSection("Dashboard")}
+              >
+                Back to dashboard
+              </button>
+            </section>
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}
